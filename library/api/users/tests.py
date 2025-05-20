@@ -26,17 +26,16 @@ class BorrowingLogics(TestCase):
                                    inventory=10,
                                    daily_fee=0.3
                                    )
-        borrowing = Borrowing.objects.create(user=self.user,
-            book_borrowed=book,
-            borrow_date=2025 - 1 - 3,
-            expected_return_date=2025 - 1 - 30,
-            actual_return_date=2025 - 1 - 29,
-            is_active=True,
-        )
         user = get_user_model().objects.create_user(
             "test@test.com",
             "testpass",
-            borrowing=borrowing,
         ),
+        borrowing = Borrowing.objects.create(user=user,
+                                             book_borrowed=book,
+                                             borrow_date=2025 - 1 - 3,
+                                             expected_return_date=2025 - 1 - 30,
+                                             actual_return_date=2025 - 1 - 29,
+                                             is_active=True,
+                                             )
         return_book = ReturnBook(returned_borrowing=borrowing)
-        self.assertNotIn(self.user.borrowing, borrowing)
+        self.assertNotIn(borrowing, self.user.borrowings)

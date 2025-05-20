@@ -2,8 +2,8 @@ from django.db import models
 from django.db.models import ManyToManyField
 
 class Author(models.Model):
-    last_name = models.CharField(max_length=255, primary_key=True, index=True)
-    first_name = models.CharField(max_length=255, black=True, null=True)
+    last_name = models.CharField(max_length=255, primary_key=True)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
 
 
 class Book(models.Model):
@@ -13,7 +13,7 @@ class Book(models.Model):
     )
 
 
-    title = models.CharField(max_length=255, primary_key=True, index=True)
+    title = models.CharField(max_length=255, primary_key=True)
     author = ManyToManyField(Author)
     cover = models.CharField(max_length=10, choices=COVER_TYPE, null=True)
     inventory = models.PositiveIntegerField()

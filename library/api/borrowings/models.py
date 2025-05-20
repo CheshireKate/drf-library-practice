@@ -4,11 +4,10 @@ from django.db import models
 from rest_framework.exceptions import ValidationError
 
 from library.api.books.models import Book
-from library.api.users.models import User
 
 
 class Borrowing(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='borrowings')
     book_borrowed = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrow_date = models.DateField()
     expected_return_date = models.DateField()
