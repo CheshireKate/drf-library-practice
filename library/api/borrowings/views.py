@@ -37,3 +37,9 @@ class ReturnBookCreateView(generics.CreateAPIView):
     queryset = ReturnBook.objects.all()
     serializer_class = ReturnBookSerializer
     permission_classes = [IsAdminUser]
+
+
+class ReturnDetailView(generics.RetrieveAPIView):
+    queryset = ReturnBook.objects.all()
+    serializer_class = ReturnBookSerializer
+    permission_classes = [IsAdminUser]
