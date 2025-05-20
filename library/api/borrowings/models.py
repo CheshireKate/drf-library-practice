@@ -7,7 +7,9 @@ from library.api.books.models import Book
 
 
 class Borrowing(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='borrowings')
+    user = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, related_name="borrowings"
+    )
     book_borrowed = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrow_date = models.DateField()
     expected_return_date = models.DateField()
@@ -28,7 +30,6 @@ class Borrowing(models.Model):
         book = self.book_borrowed
         book.inventory -= 1
         book.save()
-
 
     def attach_user_to_borrowing(self):
         self.user.borrowing = self

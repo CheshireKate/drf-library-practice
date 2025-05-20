@@ -2,7 +2,11 @@ from rest_framework import generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from library.api.borrowings.models import Borrowing, ReturnBook
-from library.api.borrowings.serializers import BorrowingSerializer, CreateBorrowingSerializer, ReturnBookSerializer
+from library.api.borrowings.serializers import (
+    BorrowingSerializer,
+    CreateBorrowingSerializer,
+    ReturnBookSerializer,
+)
 from library.permissions import IsOwner
 
 

@@ -1,6 +1,12 @@
 from django.urls import path
 
-from library.api.users.views import UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView
+from library.api.users.views import (
+    UserListView,
+    UserDetailView,
+    UserCreateView,
+    UserUpdateView,
+    UserDeleteView,
+)
 
 urlpatterns = [
     path("users/", UserListView.as_view(), name="user-list"),

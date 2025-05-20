@@ -14,8 +14,10 @@ ADMIN_URL = reverse("admin/")
 BORROWING_CREATE = reverse("borrowings:create/")
 BORROWING_URL = reverse("borrowings:borrowing-list")
 
+
 def borrowing_detail_url(borrowing_id):
     return reverse("borrowings:borrowing-detail", kwargs={"id": borrowing_id})
+
 
 def return_url(return_id):
     return reverse("borrowings:return-detail", kwargs={"id": return_id})
@@ -24,10 +26,12 @@ def return_url(return_id):
 class UnauthenticatedTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user(
-            "test@test.com",
-            "testpass",
-        ),
+        self.user = (
+            get_user_model().objects.create_user(
+                "test@test.com",
+                "testpass",
+            ),
+        )
         self.client.force_authenticate(self.user)
 
     def test_created_if_not_admin(self):
@@ -39,29 +43,26 @@ class IfAdminTests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.admin_user = User.objects.create_superuser(
-            email="admin@example.com",
-            password="adminpass"
+            email="admin@example.com", password="adminpass"
         )
         self.client.force_authenticate(self.admin_user)
 
     def test_can_create_return(self):
         author = Author.objects.create(last_name="Meyer", first_name="Stephenie")
-        book = Book.objects.create(title="Twilight",
-                                   author=author,
-                                   cover="soft",
-                                   inventory=10,
-                                   daily_fee=0.3
-                                   )
-        borrowing = Borrowing.objects.create(user=get_user_model().objects.create_user(
-            "test@test.com",
-            "testpass",
-        ),
-                                             book_borrowed=book,
-                                             borrow_date=2025-1-3,
-                                             expected_return_date=2025-1-30,
-                                             actual_return_date=2025-1-29,
-                                             is_active=True,
-                                             )
+        book = Book.objects.create(
+            title="Twilight", author=author, cover="soft", inventory=10, daily_fee=0.3
+        )
+        borrowing = Borrowing.objects.create(
+            user=get_user_model().objects.create_user(
+                "test@test.com",
+                "testpass",
+            ),
+            book_borrowed=book,
+            borrow_date=2025 - 1 - 3,
+            expected_return_date=2025 - 1 - 30,
+            actual_return_date=2025 - 1 - 29,
+            is_active=True,
+        )
         return_book = ReturnBook(returned_borrowing=borrowing)
 
         self.admin_user.put(author)
@@ -77,26 +78,27 @@ class IfAdminTests(TestCase):
 class NotOwner(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user(
-            "test@test.com",
-            "testpass",
-        ),
+        self.user = (
+            get_user_model().objects.create_user(
+                "test@test.com",
+                "testpass",
+            ),
+        )
         self.client.force_authenticate(self.user)
 
-
     def test_cant_see_other_borrowing(self):
-        another_user = get_user_model().objects.create_user(
-            "test@test.comm",
-            "testpasss",
-        ),
+        another_user = (
+            get_user_model().objects.create_user(
+                "test@test.comm",
+                "testpasss",
+            ),
+        )
         author = Author.objects.create(last_name="Meyer", first_name="Stephenie")
-        book = Book.objects.create(title="Twilight",
-                                   author=author,
-                                   cover="soft",
-                                   inventory=10,
-                                   daily_fee=0.3
-                                   )
-        borrowing = Borrowing.objects.create(user=another_user,
+        book = Book.objects.create(
+            title="Twilight", author=author, cover="soft", inventory=10, daily_fee=0.3
+        )
+        borrowing = Borrowing.objects.create(
+            user=another_user,
             book_borrowed=book,
             borrow_date=2025 - 1 - 3,
             expected_return_date=2025 - 1 - 30,
