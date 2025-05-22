@@ -1,7 +1,5 @@
-.idea/
 .vscode/
 *.iml
-.env
 .DS_Store
 .pytest_cache/
 **__pycache__/
