@@ -8,6 +8,6 @@ class Payment(models.Model):
     status = models.CharField(max_length=7, choices=STATUS)
     type = models.CharField(max_length=7, choices=TYPE)
     borrowing_id = models.IntegerField()
-    session_url = models.CharField()
+    session_url = models.CharField(max_length=255)
     session_id = models.IntegerField()
     money_to_pay = models.DecimalField(max_digits=6, decimal_places=2)
