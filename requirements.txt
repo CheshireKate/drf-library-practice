@@ -10,3 +10,5 @@ uritemplate~=4.1.1
 inflection~=0.5.1
 pytz~=2025.2
 drf-yasg~=1.21.10
+dotenv~=0.9.9
+python-dotenv~=1.1.0
