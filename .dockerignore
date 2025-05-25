@@ -1,6 +1,8 @@
 .vscode/
+.env
 *.iml
 .DS_Store
 .pytest_cache/
 **__pycache__/
 **db.sqlite3
+.idea
